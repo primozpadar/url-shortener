@@ -81,6 +81,7 @@ input {
   padding: 1rem 1.2rem;
   font-size: 1rem;
   background: var(--light);
+  color: var(--dark);
   border-radius: 0.4rem;
   outline: none;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
