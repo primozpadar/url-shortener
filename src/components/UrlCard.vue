@@ -17,7 +17,7 @@ export default defineComponent({
   components: { Button },
   emits: ["close"],
   props: {
-    url: { type: String as PropType<string> },
+    url: { type: String as PropType<string>, required: true },
   },
   methods: { copy },
 });

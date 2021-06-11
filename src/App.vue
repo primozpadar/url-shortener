@@ -1,5 +1,7 @@
 <template>
-  <UrlCard v-if="shortUrl" :url="shortUrl" @onClose="hideUrlCard" />
+  <template v-if="shortUrl">
+    <UrlCard :url="shortUrl" @onClose="hideUrlCard" />
+  </template>
   <FormCard v-else @onShort="handler" />
 </template>
 
