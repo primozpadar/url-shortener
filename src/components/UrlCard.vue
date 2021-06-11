@@ -3,7 +3,7 @@
     <a :href="url">{{ url }}</a>
     <Button @click="copy(url)">copy</Button>
   </div>
-  <svg @click="close" viewBox="0 0 24 24" stroke="currentColor">
+  <svg @click="onClose" viewBox="0 0 24 24" stroke="currentColor">
     <path d="M20 20L4 4m16 0L4 20" />
   </svg>
 </template>
@@ -15,11 +15,15 @@ import copy from "copy-to-clipboard";
 
 export default defineComponent({
   components: { Button },
-  emits: ["close"],
   props: {
     url: { type: String as PropType<string>, required: true },
   },
-  methods: { copy },
+  methods: {
+    copy,
+    onClose() {
+      this.$emit("onClose");
+    },
+  },
 });
 </script>
 
