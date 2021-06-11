@@ -1,27 +1,60 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <UrlCard v-if="shortUrl" :url="shortUrl" @onClose="hideUrlCard" />
+  <FormCard v-else @onShort="handler" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, ref } from "vue";
+import FormCard from "./components/FormCard.vue";
+import UrlCard from "./components/UrlCard.vue";
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-})
+  name: "App",
+  components: { FormCard, UrlCard },
+  setup() {
+    const shortUrl = ref<string | null>(null);
+
+    const handler = (shortId: string) => {
+      shortUrl.value = `${window.location.origin}/u/${shortId}`;
+    };
+
+    const hideUrlCard = () => {
+      shortUrl.value = null;
+    };
+
+    return { shortUrl, hideUrlCard, handler };
+  },
+});
 </script>
 
 <style>
+:root {
+  --dark: #112d32;
+  --medium: #254e58;
+  --medium-2: #1a363d;
+  --light: #96cecd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--dark);
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-size: 16px;
+
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
