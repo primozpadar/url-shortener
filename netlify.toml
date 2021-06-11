@@ -1,0 +1,14 @@
+[build]
+  command="yarn build"
+  publish="dist"
+  functions="functions"
+
+[[redirects]]
+  from="/shorten"
+  to="/.netlify/functions/shorten"
+  status=200
+
+[[redirects]]
+  from="/u/*"
+  to="/.netlify/functions/long"
+  status=200
