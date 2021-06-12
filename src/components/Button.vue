@@ -1,15 +1,16 @@
 <template>
   <button>
-    <p v-if="isLoading">Loading ...</p>
+    <LoaderCSS v-if="isLoading" />
     <slot v-else />
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import LoaderCSS from "./LoaderCSS.vue";
 
 export default defineComponent({
-  // TODO - show loader
+  components: { LoaderCSS },
   props: {
     isLoading: { type: Boolean as PropType<boolean>, required: false },
   },
@@ -18,8 +19,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 button {
-  cursor: pointer;
-
   letter-spacing: 1px;
   font-weight: bold;
   font-size: 0.9rem;
@@ -31,17 +30,27 @@ button {
 
   outline: none;
   transition: box-shadow 0.2s ease-out, padding 0.2s ease-out;
-  &:focus,
-  &:hover {
-    box-shadow: 0 0 0 4px var(--medium-2);
+
+  &:not([disabled]) {
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+      box-shadow: 0 0 0 4px var(--medium-2);
+    }
+
+    &:hover {
+      padding: 0.8rem 2rem;
+    }
+
+    &:active {
+      filter: brightness(1.05);
+    }
   }
 
-  &:hover {
-    padding: 0.8rem 2rem;
-  }
-
-  &:active {
-    filter: brightness(1.05);
+  &:disabled {
+    filter: saturate(0.9);
+    cursor: progress;
   }
 }
 </style>

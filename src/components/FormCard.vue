@@ -7,7 +7,9 @@
       @change="err = false"
       v-model="url"
     />
-    <Button @click="handleShorten">Shorten it!</Button>
+    <Button @click="handleShorten" :isLoading="loading" :disabled="loading">
+      Shorten it!
+    </Button>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ export default defineComponent({
   setup(_props, { emit }) {
     const url = ref<string>("");
     const err = ref<boolean>(false);
+    const loading = ref<boolean>(false);
 
     const handleShorten = async () => {
       const isValid = isValidUrl(url.value);
@@ -28,6 +31,8 @@ export default defineComponent({
         err.value = true;
       } else {
         try {
+          loading.value = true;
+
           // generate short url with backend function
           const res = await fetch(`/shorten?url=${url.value}`, {
             method: "POST",
@@ -38,15 +43,17 @@ export default defineComponent({
           // if status is success, emit onShort event with id for short url
           if (status === "success") {
             emit("onShort", data.shortId);
+            loading.value = false;
           }
         } catch (e) {
           err.value = true;
+          loading.value = false;
           console.log(err);
         }
       }
     };
 
-    return { url, err, handleShorten };
+    return { url, err, loading, handleShorten };
   },
 });
 </script>
