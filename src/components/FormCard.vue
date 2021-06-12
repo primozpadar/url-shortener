@@ -48,7 +48,6 @@ export default defineComponent({
         } catch (e) {
           err.value = true;
           loading.value = false;
-          console.log(err);
         }
       }
     };

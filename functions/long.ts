@@ -18,8 +18,6 @@ const handler: Handler = async (event, _context) => {
   if (segments.length !== 2) return { statusCode: 404 };
   const shortId = segments[1];
 
-  console.log(shortId);
-
   try {
     type Response = { data: { longURL: string; shortId: string } };
     const doc = await client.query<Response>(
