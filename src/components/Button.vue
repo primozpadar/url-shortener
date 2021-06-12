@@ -29,7 +29,7 @@ button {
   padding: 0.8rem 2.6rem;
 
   outline: none;
-  transition: box-shadow 0.2s ease-out, padding 0.2s ease-out;
+  transition: all 0.2s ease-out;
 
   &:not([disabled]) {
     cursor: pointer;

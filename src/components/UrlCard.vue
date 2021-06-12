@@ -1,15 +1,33 @@
 <template>
   <div class="container">
     <a :href="url">{{ url }}</a>
-    <Button @click="copy(url)">copy</Button>
+    <Button @click="handleCopy">
+      <div v-if="copied" class="copiedContainer">
+        <span>copied</span>
+        <svg
+          class="okIcon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M4 12l6 6L20 6" />
+        </svg>
+      </div>
+      <template v-else>copy</template>
+    </Button>
   </div>
-  <svg @click="onClose" viewBox="0 0 24 24" stroke="currentColor">
+  <svg
+    @click="onClose"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    class="closeIcon"
+  >
     <path d="M20 20L4 4m16 0L4 20" />
   </svg>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import Button from "./Button.vue";
 import copy from "copy-to-clipboard";
 
@@ -18,11 +36,19 @@ export default defineComponent({
   props: {
     url: { type: String as PropType<string>, required: true },
   },
-  methods: {
-    copy,
-    onClose() {
-      this.$emit("onClose");
-    },
+  setup(props, { emit }) {
+    const copied = ref<boolean>(false);
+
+    const handleCopy = () => {
+      copy(props.url);
+      copied.value = true;
+    };
+
+    const onClose = () => {
+      emit("onClose");
+    };
+
+    return { onClose, handleCopy, copied };
   },
 });
 </script>
@@ -48,7 +74,26 @@ export default defineComponent({
   }
 }
 
-svg {
+.copiedContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin-right: 0.6rem;
+  }
+
+  .okIcon {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.closeIcon {
   position: fixed;
   cursor: pointer;
   top: 1rem;
