@@ -6,6 +6,8 @@
 
 ---
 
+[Live site](https://shurl.codes)
+
 - Frontend: **Vue**
 - Backend: **Netlify Functions**, **FaunaDB**
 
